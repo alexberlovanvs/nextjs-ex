@@ -1,23 +1,26 @@
 // import { useState, useEffect } from 'react';
 
 export async function getServerSideProps(context) {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
-  const data = await res.json();
+  // const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+  // const data = await res.json();
+
+  const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
+  const dataList = await resList.json();
 
   return {
     props: {
-      data,
+      dataList,
     },
   };
 }
 
-export default function Home({ data }) {
-  // const [data, setData] = useState({});
+export default function Home({ dataList }) {
+  // const [data, setData] = useState([]);
   // useEffect(() => {
   //   const getData = async () => {
-  //     const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
-  //     const resData = await res.json();
-  //     setData(resData);
+  //     const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
+  //     const dataList = await resList.json();
+  //     setData(dataList);
   //   };
   //   getData();
   // }, []);
@@ -25,7 +28,14 @@ export default function Home({ data }) {
   return (
     <>
       <main>
-        <div>{data.body}</div>
+        {dataList.map((item) => {
+          return (
+            <div key={item.id}>
+              <h1>{item.title}</h1>
+              <p>{item.body}</p>
+            </div>
+          );
+        })}
       </main>
     </>
   );
