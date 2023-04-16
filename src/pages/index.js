@@ -1,36 +1,44 @@
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export async function getServerSideProps(context) {
-  // const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
-  // const data = await res.json();
+// export async function getServerSideProps(context) {
+//   // const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+//   // const data = await res.json();
 
-  const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
-  const dataList = await resList.json();
+//   const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
+//   const dataList = await resList.json();
 
-  return {
-    props: {
-      dataList,
-    },
+//   return {
+//     props: {
+//       dataList,
+//     },
+//   };
+// }
+
+export default function Home() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
+      const dataList = await resList.json();
+      setData(dataList);
+    };
+    getData();
+  }, []);
+
+  const handleClick = (id) => {
+    console.log(id);
   };
-}
-
-export default function Home({ dataList }) {
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
-  //     const dataList = await resList.json();
-  //     setData(dataList);
-  //   };
-  //   getData();
-  // }, []);
 
   return (
     <>
       <main>
-        {dataList.map((item) => {
+        {data.map((item) => {
           return (
-            <div key={item.id}>
+            <div
+              key={item.id}
+              style={{ padding: '10px', cursor: 'pointer', border: '1px solid pink' }}
+              onClick={() => handleClick(item.id)}
+            >
               <h1>{item.title}</h1>
               <p>{item.body}</p>
             </div>
