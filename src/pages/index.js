@@ -1,9 +1,6 @@
-// import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export async function getServerSideProps(context) {
-  // const res = await fetch('https://jsonplaceholder.typicode.com/posts/1');
-  // const data = await res.json();
-
   const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
   const dataList = await resList.json();
 
@@ -15,17 +12,11 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({ dataList }) {
-  // const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const resList = await fetch('https://jsonplaceholder.typicode.com/posts/');
-  //     const dataList = await resList.json();
-  //     setData(dataList);
-  //   };
-  //   getData();
-  // }, []);
+  const [counter, setCounter] = useState(0);
+
   const handleClick = (id) => {
     console.log(id);
+    setCounter(counter + 1);
   };
 
   return (
@@ -39,6 +30,9 @@ export default function Home({ dataList }) {
               onClick={() => handleClick(item.id)}
             >
               <h1>{item.title}</h1>
+              <h2 style={{ color: 'pink' }}>
+                Counter: <span style={{ color: 'black' }}>{counter}</span>
+              </h2>
               <p>{item.body}</p>
             </div>
           );
